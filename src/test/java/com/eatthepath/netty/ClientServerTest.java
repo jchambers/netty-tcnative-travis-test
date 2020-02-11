@@ -4,8 +4,10 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
-import io.netty.handler.codec.http2.Http2SecurityUtil;
-import io.netty.handler.ssl.*;
+import io.netty.handler.ssl.SslContext;
+import io.netty.handler.ssl.SslContextBuilder;
+import io.netty.handler.ssl.SslHandler;
+import io.netty.handler.ssl.SslProvider;
 import io.netty.util.concurrent.Future;
 import org.junit.Test;
 
@@ -45,17 +47,10 @@ public class ClientServerTest {
 
     private SslContext getClientSslContext() throws IOException {
         try (final InputStream trustedServerCertificateInputStream = getClass().getResourceAsStream("ca.pem")) {
-            final SslContext sslContext;
-            {
-                final SslContextBuilder sslContextBuilder = SslContextBuilder.forClient()
-                        .sslProvider(SslProvider.JDK)
-                        .trustManager(trustedServerCertificateInputStream)
-                        .ciphers(Http2SecurityUtil.CIPHERS, SupportedCipherSuiteFilter.INSTANCE);
-
-                sslContext = sslContextBuilder.build();
-            }
-
-            return sslContext;
+            return SslContextBuilder.forClient()
+                    .sslProvider(SslProvider.JDK)
+                    .trustManager(trustedServerCertificateInputStream)
+                    .build();
         }
     }
 
@@ -64,22 +59,10 @@ public class ClientServerTest {
              final InputStream privateKeyPkcs8InputStream = getClass().getResourceAsStream("server-key.pem");
              final InputStream trustedClientCertificateInputStream = getClass().getResourceAsStream("ca.pem")) {
 
-            final SslContext sslContext;
-            {
-                final SslProvider sslProvider = SslProvider.OPENSSL;
-
-                final SslContextBuilder sslContextBuilder =
-                        SslContextBuilder.forServer(certificateChainInputStream, privateKeyPkcs8InputStream, null);
-
-                sslContextBuilder.sslProvider(sslProvider)
-                        .clientAuth(ClientAuth.OPTIONAL);
-
-                sslContextBuilder.trustManager(trustedClientCertificateInputStream);
-
-                sslContext = sslContextBuilder.build();
-            }
-
-            return sslContext;
+            return SslContextBuilder.forServer(certificateChainInputStream, privateKeyPkcs8InputStream, null)
+                    .sslProvider(SslProvider.OPENSSL)
+                    .trustManager(trustedClientCertificateInputStream)
+                    .build();
         }
     }
 }
