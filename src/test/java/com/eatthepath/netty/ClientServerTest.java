@@ -48,7 +48,7 @@ public class ClientServerTest {
             final SslContext sslContext;
             {
                 final SslContextBuilder sslContextBuilder = SslContextBuilder.forClient()
-                        .sslProvider(SslProvider.JDK)
+                        .sslProvider(SslProvider.OPENSSL)
                         .trustManager(trustedServerCertificateInputStream)
                         .ciphers(Http2SecurityUtil.CIPHERS, SupportedCipherSuiteFilter.INSTANCE);
 
@@ -66,7 +66,7 @@ public class ClientServerTest {
 
             final SslContext sslContext;
             {
-                final SslProvider sslProvider = SslProvider.OPENSSL;
+                final SslProvider sslProvider = SslProvider.JDK;
 
                 final SslContextBuilder sslContextBuilder =
                         SslContextBuilder.forServer(certificateChainInputStream, privateKeyPkcs8InputStream, null);
