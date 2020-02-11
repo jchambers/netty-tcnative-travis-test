@@ -1,5 +1,7 @@
 package com.eatthepath.netty;
 
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.UnpooledByteBufAllocator;
 import io.netty.handler.codec.http2.Http2SecurityUtil;
 import io.netty.handler.ssl.*;
 import io.netty.util.ReferenceCounted;
@@ -11,6 +13,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 public class TcnativeTest {
@@ -31,6 +34,8 @@ public class TcnativeTest {
 
             sslContext = sslContextBuilder.build();
         }
+
+        assertNotNull(sslContext.newHandler(UnpooledByteBufAllocator.DEFAULT));
 
         if (sslContext instanceof ReferenceCounted) {
             ((ReferenceCounted) sslContext).release();
@@ -63,6 +68,8 @@ public class TcnativeTest {
 
                 sslContext = sslContextBuilder.build();
             }
+
+            assertNotNull(sslContext.newEngine(UnpooledByteBufAllocator.DEFAULT));
 
             if (sslContext instanceof ReferenceCounted) {
                 ((ReferenceCounted) sslContext).release();
