@@ -5,10 +5,6 @@ matrix:
         - os: linux
           jdk: openjdk8
 
-        - os: linux
-          dist: trusty
-          jdk: openjdk7
-
         - os: osx
           osx_image: xcode8.3
           script: uname -a && mvn test -B
