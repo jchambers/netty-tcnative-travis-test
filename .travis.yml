@@ -11,3 +11,4 @@ matrix:
 
         - os: osx
           osx_image: xcode8.3
+          script: uname -a && mvn test -B
