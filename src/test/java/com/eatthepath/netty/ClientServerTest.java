@@ -77,12 +77,6 @@ public class ClientServerTest {
 
                 sslContextBuilder.trustManager(trustedClientCertificateInputStream);
 
-                sslContextBuilder.applicationProtocolConfig(new ApplicationProtocolConfig(
-                        ApplicationProtocolConfig.Protocol.ALPN,
-                        ApplicationProtocolConfig.SelectorFailureBehavior.NO_ADVERTISE,
-                        ApplicationProtocolConfig.SelectedListenerFailureBehavior.ACCEPT,
-                        ApplicationProtocolNames.HTTP_2));
-
                 sslContext = sslContextBuilder.build();
             }
 
