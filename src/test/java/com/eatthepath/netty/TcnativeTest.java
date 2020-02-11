@@ -1,6 +1,5 @@
 package com.eatthepath.netty;
 
-import io.netty.buffer.ByteBuf;
 import io.netty.buffer.UnpooledByteBufAllocator;
 import io.netty.handler.codec.http2.Http2SecurityUtil;
 import io.netty.handler.ssl.*;
@@ -8,8 +7,6 @@ import io.netty.util.ReferenceCounted;
 import org.junit.Test;
 
 import javax.net.ssl.SSLException;
-
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
