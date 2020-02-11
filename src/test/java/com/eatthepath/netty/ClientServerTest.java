@@ -66,7 +66,7 @@ public class ClientServerTest {
 
             final SslContext sslContext;
             {
-                final SslProvider sslProvider = SslProvider.OPENSSL;
+                final SslProvider sslProvider = SslProvider.JDK;
 
                 final SslContextBuilder sslContextBuilder =
                         SslContextBuilder.forServer(certificateChainInputStream, privateKeyPkcs8InputStream, null);
