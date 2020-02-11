@@ -72,7 +72,6 @@ public class ClientServerTest {
                         SslContextBuilder.forServer(certificateChainInputStream, privateKeyPkcs8InputStream, null);
 
                 sslContextBuilder.sslProvider(sslProvider)
-                        .ciphers(Http2SecurityUtil.CIPHERS, SupportedCipherSuiteFilter.INSTANCE)
                         .clientAuth(ClientAuth.OPTIONAL);
 
                 sslContextBuilder.trustManager(trustedClientCertificateInputStream);
