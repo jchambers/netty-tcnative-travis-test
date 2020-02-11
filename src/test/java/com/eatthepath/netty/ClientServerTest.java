@@ -1,9 +1,12 @@
 package com.eatthepath.netty;
 
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelFuture;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.handler.codec.http2.Http2SecurityUtil;
 import io.netty.handler.ssl.*;
+import io.netty.util.concurrent.Future;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -17,20 +20,6 @@ public class ClientServerTest {
     private static final int PORT = 8080;
 
     @Test
-    public void testStartStopServer() throws InterruptedException, IOException {
-        final EventLoopGroup eventLoopGroup = new NioEventLoopGroup(2);
-
-        try {
-            final Server server = new Server(getServerSslContext(), eventLoopGroup);
-
-            assertTrue(server.start(PORT).await().isSuccess());
-            assertTrue(server.shutdown().await().isSuccess());
-        } finally {
-            eventLoopGroup.shutdownGracefully().await();
-        }
-    }
-
-    @Test
     public void testConnectClient() throws IOException, InterruptedException {
         final EventLoopGroup eventLoopGroup = new NioEventLoopGroup(2);
 
@@ -41,11 +30,14 @@ public class ClientServerTest {
 
             final Client client = new Client(getClientSslContext(), InetSocketAddress.createUnresolved("localhost", PORT), eventLoopGroup);
 
-            client.connect();
+            final ChannelFuture connectFuture = client.connect().await();
 
-            Thread.sleep(1000);
+            assertTrue(connectFuture.isSuccess());
 
-            assertTrue(server.shutdown().await().isSuccess());
+            final Future<Channel> handshakeFuture =
+                    connectFuture.channel().pipeline().get(SslHandler.class).handshakeFuture().await();
+
+            assertTrue(handshakeFuture.isSuccess());
         } finally {
             eventLoopGroup.shutdownGracefully().await();
         }

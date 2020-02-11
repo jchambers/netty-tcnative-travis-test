@@ -56,7 +56,7 @@ public class Client {
         });
     }
 
-    public void connect() {
+    public ChannelFuture connect() {
         final Bootstrap bootstrap = this.bootstrapTemplate.clone();
 
         final ChannelFuture connectFuture = bootstrap.connect();
@@ -73,6 +73,6 @@ public class Client {
             }
         });
 
-        bootstrap.connect();
+        return bootstrap.connect();
     }
 }
