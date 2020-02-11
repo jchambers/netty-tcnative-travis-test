@@ -1,6 +1,6 @@
 # netty-tcnative crash reproduction case
 
-This is a minimal (I think!) reproduction case for a crash observed on Travis CI when using netty-tcnative. [netty-tcnative 2.0.27](https://github.com/netty/netty-tcnative/milestone/64?closed=1) is the first release to have this problem, but I'm not sure which specific commit within that releases causes the problem.
+This is a minimal (I think!) reproduction case for a crash observed on Travis CI when using netty-tcnative that's been reported as [netty/netty-tcnative#523](https://github.com/netty/netty-tcnative/issues/523). [netty-tcnative 2.0.27](https://github.com/netty/netty-tcnative/milestone/64?closed=1) is the first release to have this problem, but I'm not sure which specific commit within that releases causes the problem.
 
 Travis produces the following output when running the test:
 
