@@ -36,4 +36,11 @@ dyld: Symbol not found: ____chkstk_darwin
 /bin/sh: line 1:  1443 Abort trap: 6           /Library/Java/JavaVirtualMachines/jdk1.8.0_112.jdk/Contents/Home/jre/bin/java -jar /Users/travis/build/jchambers/netty-tcnative-travis-test/target/surefire/surefirebooter6882775787343813136.jar /Users/travis/build/jchambers/netty-tcnative-travis-test/target/surefire/surefire8113115051640716633tmp /Users/travis/build/jchambers/netty-tcnative-travis-test/target/surefire/surefire_08398107402907887457tmp
 ```
 
-The problem seems to be happening during the TLS handshake.
+The problem seems to be happening during the TLS handshake and seems to be on the server side. Changing the SSL providers used by the client and server reveals:
+
+| Client SSL provider | Server SSL provider | Crashes? |
+|---------------------|---------------------|----------|
+| `OPENSSL`           | `OPENSSL`           | Yes      |
+| `JDK`               | `OPENSSL`           | Yes      |
+| `OPENSSL`           | `JDK`               | No       |
+| `JDK`               | `JDK`               | No       |
