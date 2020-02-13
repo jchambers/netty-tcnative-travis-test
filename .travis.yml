@@ -1,5 +1,5 @@
 language: java
-script: uname -a && mvn test -B
+script: uname -a && brew install openssl && mvn test -B
 
 os:
     - linux
