@@ -29,7 +29,7 @@
 
         <dependency>
             <groupId>io.netty</groupId>
-            <artifactId>netty-tcnative-boringssl-static</artifactId>
+            <artifactId>netty-tcnative</artifactId>
             <version>2.0.28.Final</version>
         </dependency>
 
