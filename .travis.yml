@@ -1,24 +1,35 @@
 language: java
-script: uname -a && brew install openssl && mvn test -B
+script: |
+    uname -a
+    brew install autoconf automake libtool openssl perl ninja golang cmake apr
+    git clone https://github.com/netty/netty-tcnative.git
+    pushd netty-tcnative
+    # To build a specific version: (e.g. netty-tcnative-2.0.0.Final)
+    # git checkout netty-tcnative-[version]
+    # To build a snapshot: (e.g. 2.0.0.Final)
+    # git checkout [branch]
+    mvn clean install
+    popd
+    mvn test -B
 
 os:
     - osx
 
 osx_image:
     - xcode11.3
-    - xcode11.2
-    - xcode11.1
-    - xcode11
-    - xcode10.3
-    - xcode10.2
-    - xcode10.1
-    - xcode10
-    - xcode9.4
-    - xcode9.3
-    - xcode9.2
-    - xcode9.1
-    - xcode9
+#    - xcode11.2
+#    - xcode11.1
+#    - xcode11
+#    - xcode10.3
+#    - xcode10.2
+#    - xcode10.1
+#    - xcode10
+#    - xcode9.4
+#    - xcode9.3
+#    - xcode9.2
+#    - xcode9.1
+#    - xcode9
     - xcode8.3
-    - xcode8
-    - xcode7.3
-    - xcode6.4
+#    - xcode8
+#    - xcode7.3
+#    - xcode6.4
