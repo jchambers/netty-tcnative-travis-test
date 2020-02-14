@@ -1,16 +1,11 @@
 language: java
-script: |
-    uname -a
-    brew install autoconf automake libtool openssl perl ninja golang cmake apr
-    git clone https://github.com/netty/netty-tcnative.git
-    pushd netty-tcnative
-    # To build a specific version: (e.g. netty-tcnative-2.0.0.Final)
-    # git checkout netty-tcnative-[version]
-    # To build a snapshot: (e.g. 2.0.0.Final)
-    # git checkout [branch]
-    mvn -Dmaven.compiler.source=1.7 -Dmaven.compiler.target=1.7 clean install
-    popd
-    mvn test -B
+install:
+    - uname -a
+    - brew install autoconf automake libtool openssl perl ninja golang cmake apr
+    - git clone https://github.com/netty/netty-tcnative.git
+    - pushd netty-tcnative
+    - mvn -Dmaven.compiler.source=1.7 -Dmaven.compiler.target=1.7 clean install
+    - popd
 
 os:
     - osx
